@@ -38,3 +38,5 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 launchctl load com.solintllc.flake.vpn.check_vpn_status.plist
+
+cp vpn_check.1s.sh ~/Library/Application\ Support/xbar/plugins/
