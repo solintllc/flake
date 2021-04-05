@@ -16,9 +16,6 @@ import signal
 import json
 import flag
 
-# set up logging
-logging.basicConfig(filename='/Users/rr/Documents/internal/flake/vpn/check_vpn_status/example.log', filemode="w", level=logging.INFO)
-
 
 # GLOBALS AND CONSTANTS
 
@@ -29,6 +26,7 @@ ip_geoloc_api_key = '183c67fde4684c1a87fd27ddfff3954e'
 
 cache_dir = "/Users/rr/Library/Caches/Flake"
 cache_file_my_ip_location = f'{cache_dir}/my_ips_location.txt'
+
 
 def handler(signum, frame):
     logging.debug('All done')
@@ -88,6 +86,8 @@ def setup_environment():
         os.mkdir(cache_dir)
     except FileExistsError as e:
         pass
+
+    logging.basicConfig(filename=f'{cache_dir}/check_vpn_status.log', filemode="w", level=logging.INFO)
 
 
 def __main():

@@ -3,8 +3,6 @@ this contraption has several parts
 1. python script. see check_vpn_status.py for more details
 2. run_check.sh script. basically a wrapper to the python that sets up the venv.
 3. launchagent. this runs the python script continuously. see com.solintllc.flake.vpn.check_vpn_status.plist.
-   to install:
-   cp com.solintllc.flake.vpn.check_vpn_status.plist /Users/rr/Library/LaunchAgents
 
    validate the plist with `plutil -lint com.solintllc.flake.vpn.check_vpn_status.plist`
 
@@ -31,4 +29,12 @@ this contraption has several parts
 
 
 
+to install (from check_vpn_status directory):
 
+cp com.solintllc.flake.vpn.check_vpn_status.plist /Users/rr/Library/LaunchAgents
+
+python3 -m 'virtualenv' 'venv'
+source venv/bin/activate
+pip install -r requirements.txt
+
+launchctl load com.solintllc.flake.vpn.check_vpn_status.plist
