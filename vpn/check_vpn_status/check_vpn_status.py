@@ -43,7 +43,7 @@ def is_ip_address_changed():
         logging.debug(f'old ip: {my_ip_address}. new ip: {resp.content}')
     except Exception as e:
         logging.debug(f'ERROR: Unable to look up ip address {e}')
-        return False
+        return True
 
     if resp.content != my_ip_address:
         my_ip_address = resp.content
@@ -52,20 +52,25 @@ def is_ip_address_changed():
         return False
 
 
+locations = dict()
 def get_my_ips_location():
     my_ips_location = 'UNKNOWN'
 
     try:
-        # call ipgeolocation service to look up the location for my current external ip. see 1PW for username and password
-        # if you don't specify an ip address to look up the location for, it just uses your ip
-        # we set a time out of a little more than 3 seconds because that's what `requests` instructions say to do
-        # 
-        # i have a free account that gives 30K lookups a month. if we we didn't cache the ip address in the variable, then i would 
-        # exhaust my allowanced in 8 hours.
-        resp = requests.get(f'https://api.ipgeolocation.io/ipgeo?apiKey={ip_geoloc_api_key}', timeout = 3.05)
+        if my_ip_address in locations:
+            return locations[my_ip_address]
+        else:
+            # call ipgeolocation service to look up the location for my current external ip. see 1PW for username and password
+            # if you don't specify an ip address to look up the location for, it just uses your ip
+            # we set a time out of a little more than 3 seconds because that's what `requests` instructions say to do
+            # 
+            # i have a free account that gives 30K lookups a month. if we we didn't cache the ip address in the variable, then i would 
+            # exhaust my allowanced in 8 hours.
+            resp = requests.get(f'https://api.ipgeolocation.io/ipgeo?apiKey={ip_geoloc_api_key}', timeout = 3.05)
 
-        location_data = json.loads(resp.content)
-        my_ips_location = location_data['country_code2']
+            location_data = json.loads(resp.content)
+            my_ips_location = location_data['country_code2']
+            locations[my_ip_address] = my_ips_location
 
     except Exception as e:
         logging.debug(f'ERROR: looking up geolocation {e}')
