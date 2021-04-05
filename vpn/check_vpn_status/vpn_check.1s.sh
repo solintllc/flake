@@ -22,9 +22,13 @@ main() {
       cat ${flag_file}
    elif [[ $(( $(date +%S) % 2 )) -eq 1 ]]
    then
-      echo -e "\033[41mVPN STATUS ERROR\033[0m"
+      echo "⚠️ "
+      echo "---"
+      echo "VPN STATUS ERROR"
    else
-      echo -e "VPN STATUS ERROR"
+      echo " "
+      echo "---"
+      echo "VPN STATUS ERROR"
    fi
 }
 
