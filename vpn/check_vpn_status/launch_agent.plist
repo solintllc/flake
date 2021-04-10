@@ -2,18 +2,18 @@
 
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 
-<plist version="1.0">
+<plist version="VERSION">
 
 <dict>
 
     <key>Label</key>
 
-    <string>com.solintllc.flake.check_vpn_status</string>
+    <string>PACKAGE</string>
 
     <key>ProgramArguments</key>
     <array>
         <string>/usr/local/bin/bash</string>
-        <string>/Users/rr/Documents/internal/flake/vpn/check_vpn_status/run_check.sh</string>
+        <string>HOME/.bin/check_vpn_status/run_vpn_check.sh</string>
     </array>
 
     <key>KeepAlive</key>

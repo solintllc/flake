@@ -18,23 +18,13 @@ this contraption has several parts
    the specs say you should put the script in /usr/local/libexec, but a) you need to be root to do that, b) it didn't seem necessary,
    and c) it didn't actually work.
 
-4. bitbar. bitbar is the utility that puts the stuff in the menu bar. see
-   - https://nicedoc.io/matryer/bitbar
+4. xbar is the utility that puts the stuff in the menu bar. see
    - https://github.com/matryer/xbar
 
-5. bitbar script. this script looks for the stuff the check_vpn_status.py spits out and reports it in the menu bar. see ~/.config/bitbar/vpn_check.1s.sh
-   you'll need to move it to that location.
-
-
-
+5. bitbar script. this script looks for the stuff the check_vpn_status.py spits out and reports it in the menu bar. see xbar.sh.
 
 
 to install (from check_vpn_status directory):
 
-cp com.solintllc.flake.vpn.check_vpn_status.plist /Users/rr/Library/LaunchAgents
+`./setup.sh`
 
-python3 -m 'virtualenv' 'venv'
-source venv/bin/activate
-pip install -r requirements.txt
-
-launchctl load com.solintllc.flake.vpn.check_vpn_status.plist

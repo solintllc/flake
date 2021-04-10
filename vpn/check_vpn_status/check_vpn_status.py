@@ -18,14 +18,16 @@ import geolocate_ip.get_my_ips_location as get_my_ips_location
 
 # GLOBALS AND CONSTANTS
 
+package_name = 'com.solintllc.flake.vpn.check_vpn_status'
+
 # for the first go round, set to an obviously internal address
 my_ip_address = '127.0.0.1'
-cache_dir = "/Users/rr/Library/Caches/Flake"
+cache_dir = f'~/Library/Caches/{package_name}'
 cache_file_my_ip_location = f'{cache_dir}/my_ips_location.txt'
 
 
 def handler(signum, frame):
-    logging.debug(f'Received signal{signum}. Exiting.')
+    logging.info(f'Received signal{signum}. Exiting.')
     os._exit(0)
 
 
@@ -38,7 +40,7 @@ def is_ip_address_changed():
         resp = requests.get("https://api.ipify.org?format=plain", timeout=3.05)
         logging.debug(f'old ip: {my_ip_address}. new ip: {resp.content}')
     except Exception as e:
-        logging.debug(f'ERROR: Unable to look up ip address {e}')
+        logging.warning(f'WARNING: Unable to look up ip address {e}')
         return False
 
     if resp.content != my_ip_address:
@@ -63,17 +65,15 @@ def setup_environment():
     except FileExistsError as e:
         pass
 
-    logging.basicConfig(filename=f'{cache_dir}/check_vpn_status.log', filemode="w", level=logging.INFO)
+    logging.basicConfig(filename=f'{cache_dir}/check_vpn_status.log', filemode="w", level=logging.DEBUG
 
     signal.signal(signal.SIGTERM, handler)
     signal.signal(signal.SIGINT, handler)
 
 
-def __main():
+def main():
 
     setup_environment()
-
-
 
     my_ips_location = 'UNKNOWN'
     while True:
@@ -82,5 +82,5 @@ def __main():
 
         record_my_ips_location(my_ips_location)
 
-
-__main()
+if __name__ == '__main__':
+    main()
