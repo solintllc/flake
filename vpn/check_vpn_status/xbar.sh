@@ -8,7 +8,8 @@
 # <bitbar.dependencies></bitbar.dependencies>
 # <bitbar.abouturl>http://url-to-about.com/</bitbar.abouturl>
 
-cache_dir="/Users/rr/Library/Caches/Flake"
+package_name="com.solintllc.flake.vpn.check_vpn_status"
+cache_dir="${HOME}/Library/Caches/${package_name}"
 flag_file="${cache_dir}/my_ips_location.txt"
 
 

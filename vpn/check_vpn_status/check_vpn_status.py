@@ -14,7 +14,8 @@ import requests
 import os
 import signal
 import flag
-import geolocate_ip.get_my_ips_location as get_my_ips_location
+import geolocate_ip
+from pathlib import Path
 
 # GLOBALS AND CONSTANTS
 
@@ -22,8 +23,9 @@ package_name = 'com.solintllc.flake.vpn.check_vpn_status'
 
 # for the first go round, set to an obviously internal address
 my_ip_address = '127.0.0.1'
-cache_dir = f'~/Library/Caches/{package_name}'
+cache_dir = str(Path.home()) + f'/Library/Caches/{package_name}'
 cache_file_my_ip_location = f'{cache_dir}/my_ips_location.txt'
+
 
 
 def handler(signum, frame):
@@ -65,7 +67,8 @@ def setup_environment():
     except FileExistsError as e:
         pass
 
-    logging.basicConfig(filename=f'{cache_dir}/check_vpn_status.log', filemode="w", level=logging.DEBUG
+    logging.basicConfig(filename=f'{cache_dir}/check_vpn_status.log', filemode="w", level=logging.DEBUG)
+    logging.info("Starting...")
 
     signal.signal(signal.SIGTERM, handler)
     signal.signal(signal.SIGINT, handler)
@@ -78,7 +81,7 @@ def main():
     my_ips_location = 'UNKNOWN'
     while True:
         if is_ip_address_changed():
-            my_ips_location = get_my_ips_location()
+            my_ips_location = geolocate_ip.get_my_ips_location() 
 
         record_my_ips_location(my_ips_location)
 
